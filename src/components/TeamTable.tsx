@@ -8,7 +8,11 @@ function TeamTable() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://3.254.68.200:8000/api/getTeams");
+        const response = await fetch("http://3.254.68.200:8000/api/getTeams", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
         const result = await response.json();
 
         setData(result);
@@ -33,9 +37,7 @@ function TeamTable() {
         }
       );
 
-      // Check if the delete request was successful (status code 200-299)
       if (response.ok) {
-        // Remove the deleted item from the state
         setData((prevData) => prevData.filter((item) => item["id"] !== key));
       } else {
         console.error("Error deleting item:", response.statusText);
@@ -76,7 +78,6 @@ function TeamTable() {
                   Delete
                 </button>
               </td>
-              {/* Add more table cells based on your data structure */}
             </tr>
           ))}
         </tbody>

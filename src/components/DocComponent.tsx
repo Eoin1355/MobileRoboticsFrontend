@@ -7,16 +7,16 @@ function DocComponent() {
 
   ## How to use
   
-  The server that your robot will comunicate with is at [http://123.123.123:8081](http://123.123.123:8081)
+  The server that your robot will comunicate with is at [http://3.254.68.200:8000]()
   
   
-  ### To Notify the server of Arival
+  ### To Notify the server of Arrival
   
-  To notify the EE303 Mobile Robotics Server of your arival the robot should send a post to **/api/arrived/TEAM-ID**, this request should contain your position in the body.
+  To notify the EE303 Mobile Robotics Server of your arrival the robot should send a post to **/api/arrived/TEAM-ID**, this request should contain your position in the body.
   
   **Example:**
 
-  To nofity the server of arival to position 0 the folling post request would be sent.
+  To nofity the server of arrival to position 0 the following post request would be sent.
   
   \`\`\`
   POST /api/arrived/TEAM-ID HTTP/1.1

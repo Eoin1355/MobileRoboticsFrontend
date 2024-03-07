@@ -31,13 +31,10 @@ axios.interceptors.response.use(
           if (error.config) {
             return axios(error.config);
           } else {
-            // Handle the case when error.config is undefined
             return Promise.reject(error);
           }
         }
-      } catch (refreshError) {
-        // Handle refresh error if needed
-      }
+      } catch (refreshError) {}
     }
 
     refresh = false;

@@ -16,12 +16,10 @@ function NavBar({ isLoggedIn }: { isLoggedIn: boolean }) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="documentation">API Documentation</Nav.Link>
-            <Nav.Link href="admin">Admin</Nav.Link>
+            <Nav.Link href="/documentation">API Documentation</Nav.Link>
+            <Nav.Link href="/admin">Admin</Nav.Link>
           </Nav>
           <Nav className="ml-auto">
-            {" "}
-            {/* Use ml-auto to push items to the right */}
             {isLoggedIn ? (
               <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             ) : (

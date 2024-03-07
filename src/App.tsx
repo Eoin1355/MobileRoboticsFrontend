@@ -30,13 +30,14 @@ function App() {
             setAuthenticated(false);
           }
         } catch (error) {
-          console.error("Error validating token:", error);
+          // console.error("Error validating token:", error);
         }
       }
     };
 
     validateToken();
   }, []);
+
   return (
     <Router>
       <Navbar isLoggedIn={authenticated} />

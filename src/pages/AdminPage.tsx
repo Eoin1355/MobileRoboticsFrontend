@@ -4,7 +4,7 @@ import TeamTable from "../components/TeamTable";
 
 function AdminPage({ authenticated }: { authenticated: boolean }) {
   return (
-    <div>
+    <>
       {authenticated ? (
         <>
           <AddTeamForm />
@@ -13,7 +13,7 @@ function AdminPage({ authenticated }: { authenticated: boolean }) {
       ) : (
         <LoginForm />
       )}
-    </div>
+    </>
   );
 }
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Image from "react-bootstrap/Image";
 import TrackSvg from "../assets/track.svg";
+import Flag from "../assets/flag.png";
 // import TrackPng from "../assets/track.png";
 import CarImg from "../assets/car.png";
 import TargetImg from "../assets/dart.png";
@@ -17,13 +18,14 @@ function Track({
   const [destination, setDestination] = useState("0");
   const [positionVisibility, setPositionVisibility] = useState("none");
   const [destinationVisibility, setDestinationVisibility] = useState("none");
+  const [finishLine, setFinishLine] = useState("0");
+  const [finishLineVisibility, setFinishLineVisibility] = useState("none");
 
   useEffect(() => {
     if (teamId) {
       const ws = new WebSocket(`ws://3.254.68.200:8000/ws/track/${teamId}/`);
 
       ws.onerror = () => {
-        // console.error("Error fetching data:", error);
         setPosition("5");
         setDestination("5");
         setPositionVisibility("none");
@@ -32,19 +34,17 @@ function Track({
         setRoute("");
       };
 
-      ws.onopen = () => {
-        console.log("Connected to WebSocket");
-      };
-
       ws.onmessage = (event) => {
         const data = JSON.parse(event.data);
         setRoute(data.route);
         const routeArray: string[] = data.route.split(",").map(Number);
         const index = parseInt(data.index);
+
+        setPositionVisibility("none");
+        setDestinationVisibility("none");
+        setFinishLineVisibility("none");
         if (index == 0) {
           setDestination(routeArray[index]);
-          setPosition(routeArray[0]);
-          setPositionVisibility("none");
           setDestinationVisibility("block");
         } else if (routeArray.length > index) {
           setPosition(routeArray[index - 1]);
@@ -52,17 +52,9 @@ function Track({
           setPositionVisibility("block");
           setDestinationVisibility("block");
         } else if (routeArray.length == index) {
-          setPosition(routeArray[index - 1]);
-          setDestination(routeArray[0]);
-          setPositionVisibility("block");
-          setDestinationVisibility("none");
+          setFinishLine(routeArray[index - 1]);
+          setFinishLineVisibility("block");
         }
-        // Process data as needed
-        console.log("Received data:", data);
-      };
-
-      ws.onclose = () => {
-        console.log("WebSocket closed");
       };
 
       return () => {
@@ -106,8 +98,7 @@ function Track({
             position: "absolute",
             top: cords[parseInt(position)][0],
             left: cords[parseInt(position)][1],
-            color: "Orange",
-            width: "4%",
+            width: "8%",
             height: "auto",
             transform: "translate(-50%, -50%)",
             display: positionVisibility,
@@ -119,11 +110,22 @@ function Track({
             position: "absolute",
             top: cords[parseInt(destination)][0],
             left: cords[parseInt(destination)][1],
-            color: "Orange",
-            width: "4%",
+            width: "8%",
             height: "auto",
             transform: "translate(-50%, -50%)",
             display: destinationVisibility,
+          }}
+        />
+        <Image
+          src={Flag}
+          style={{
+            position: "absolute",
+            top: cords[parseInt(finishLine)][0],
+            left: cords[parseInt(finishLine)][1],
+            width: "8%",
+            height: "auto",
+            transform: "translate(-50%, -50%)",
+            display: finishLineVisibility,
           }}
         />
       </div>

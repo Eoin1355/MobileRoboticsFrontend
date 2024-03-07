@@ -7,11 +7,11 @@ function HomePage() {
   const [teamId, setTeamId] = useState("");
 
   return (
-    <div>
+    <>
       <TeamInput onTeamId={setTeamId} />
       <Track teamId={teamId} onTeamId={setTeamId} />
       <RouteInput teamId={teamId} />
-    </div>
+    </>
   );
 }
 

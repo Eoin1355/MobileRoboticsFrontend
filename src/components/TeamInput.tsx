@@ -4,6 +4,7 @@ function TeamInput({ onTeamId }: { onTeamId: (teamId: string) => void }) {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     onTeamId(e.target.elements.teamID.value);
+    e.target.reset();
   };
 
   return (
