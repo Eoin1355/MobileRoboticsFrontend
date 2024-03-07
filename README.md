@@ -1,30 +1,69 @@
-# React + TypeScript + Vite
+# EE303 Mobile Robotics Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## How to change server ip address
 
-Currently, two official plugins are available:
+1. Use "find and replace" to replace `http://3.250.38.184` with the new ip address
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## How to build for deployment
 
-## Expanding the ESLint configuration
+1. Run `npm run build` this will create a dist folder in the root of the project. This should contain an assets folder, facivon.ico and index.html
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## How to Deploy to AWS
 
-- Configure the top-level `parserOptions` property like this:
+1. Create S3 bucket
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
+- Choose AWS Region - Europe (Ireland)eu-west 1
+- Choose Bucket Name -
+- Uncheck Block all public access
+- Press Create
+
+2. Enable static website hosting
+
+- Press on previously created bucket
+- Go to the Properties tab
+- Under Static website hosting, choose Edit
+- Choose Use this bucket to host a website.
+- Under Static website hosting, choose Enable.
+- In Index document and Error document, enter the file name of the index document, index.html.
+- Choose Save changes.
+
+3. Edit Block Public Access settings
+
+- Go to Permissions tab
+- Under Block public access (bucket settings), choose Edit.
+- Clear Block all public access, and choose Save changes.
+
+4. Add a bucket policy that makes your bucket content publicly available
+
+- Under Buckets, choose the name of your bucket.
+- Choose Permissions.
+- Under Bucket Policy, choose Edit.
+- To grant public read access for your website, copy the following bucket policy, and paste it in the Bucket policy editor. Change `BucketName` to the name of your bucket.
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+          "Sid": "Statement1",
+          "Effect": "Allow",
+          "Principal": "*",
+          "Action": "s3:GetObject",
+          "Resource": "arn:aws:s3:::BucketName/*"
+      }
+  ]
 }
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Choose Save changes
+
+5. Upload Frontend Files
+
+- Go to the objects tab
+- Press upload
+- Drag and drop all files and the folder in the dist folder
+- Press upload
+
+6. Retrieve the url form bottom of the properties tab
+
+- You should be able to view this site now.
